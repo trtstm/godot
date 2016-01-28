@@ -52,19 +52,20 @@ bool Custom::can_instance() const
 	return true;
 }
 
-
+// TODO: do real stuff
 StringName Custom::get_instance_base_type() const
 {
 	std::cout << "Custom::get_instance_base_type" << std::endl;
-	return StringName();
+	return StringName("MainLoop");
 }
 
+// Create instance that inherits from p_this
 ScriptInstance* Custom::instance_create(Object *p_this)
 {
 	std::cout << "Custom::instance_create" << std::endl;
-	ERR_EXPLAIN(p_this->get_type_name());
-	ERR_FAIL_V(NULL);
-	return NULL;
+	//ERR_EXPLAIN(p_this->get_type_name());
+	//ERR_FAIL_V(NULL);
+	return memnew(CustomInstance);
 }
 
 bool Custom::instance_has(const Object *p_this) const
@@ -434,3 +435,71 @@ bool ResourceFormatSaverCustom::recognize(const RES& p_resource) const
 	return p_resource->cast_to<Custom>() != NULL;
 }
 
+
+// ------------------------------------
+bool CustomInstance::set(const StringName& p_name, const Variant& p_value)
+{
+	std::cout << "CustomInstance::set" << std::endl;
+	ERR_EXPLAIN(String(p_name));
+	ERR_FAIL_V("");
+	return false;
+}
+
+bool CustomInstance::get(const StringName& p_name, Variant &r_ret) const
+{
+	std::cout << "CustomInstance::get" << std::endl;
+	ERR_EXPLAIN(String(p_name));
+	ERR_FAIL_V("");
+	return false;
+}
+
+void CustomInstance::get_property_list(List<PropertyInfo> *p_properties) const
+{
+	std::cout << "CustomInstance::get_property_list" << std::endl;
+}
+
+Variant::Type CustomInstance::get_property_type(const StringName& p_name,bool *r_is_valid) const
+{
+	std::cout << "CustomInstance::get_property_type" << std::endl;
+	ERR_EXPLAIN(String(p_name));
+	ERR_FAIL_V(Variant::NIL);
+	return Variant::NIL;
+}
+
+void CustomInstance::get_method_list(List<MethodInfo> *p_list) const
+{
+	std::cout << "CustomInstance::get_method_list" << std::endl;
+}
+
+bool CustomInstance::has_method(const StringName& p_method) const
+{
+	std::cout << "CustomInstance::has_method" << std::endl;
+	ERR_EXPLAIN(String(p_method));
+	ERR_FAIL_V(false);
+	return false;
+}
+
+Variant CustomInstance::call(const StringName& p_method,const Variant** p_args,int p_argcount,Variant::CallError &r_error)
+{
+	std::cout << "CustomInstance::call" << std::endl;
+	ERR_EXPLAIN(String(p_method));
+	ERR_FAIL_V(Variant::NIL);
+	return Variant::NIL;
+}
+
+void CustomInstance::notification(int p_notification)
+{
+	std::cout << "CustomInstance::notification" << std::endl;
+}
+
+Ref<Script> CustomInstance::get_script() const
+{
+	std::cout << "CustomInstance::get_script" << std::endl;
+	return memnew(Custom);
+}
+
+ScriptLanguage *CustomInstance::get_language()
+{
+	std::cout << "CustomInstance::get_language" << std::endl;
+	return CustomLanguage::get_singleton();
+}
