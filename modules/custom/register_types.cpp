@@ -19,6 +19,8 @@
 #include "io/file_access_encrypted.h"
 
 CustomLanguage *script_language=NULL;
+ResourceFormatLoaderCustom *resource_loader=NULL;
+ResourceFormatSaverCustom *resource_saver=NULL;
 
 
 #ifdef TOOLS_ENABLED
@@ -61,6 +63,11 @@ void register_custom_types() {
 	script_language=memnew( CustomLanguage );
 	//script_language_gd->init();
 	ScriptServer::register_language(script_language);
+
+	resource_loader=memnew( ResourceFormatLoaderCustom );
+	ResourceLoader::add_resource_format_loader(resource_loader);
+	resource_saver=memnew( ResourceFormatSaverCustom );
+	ResourceSaver::add_resource_format_saver(resource_saver);
 
 #ifdef TOOLS_ENABLED
 

@@ -35,10 +35,15 @@
 #include "os/thread.h"
 #include "pair.h"
 
+class ResourceFormatSaverCustom;
+class ResourceFormatLoaderCustom;
+
 class Custom : public Script {
 
 
 	OBJ_TYPE(Custom,Script);
+
+	String source;
 
 public:
 	Custom();
@@ -72,10 +77,15 @@ public:
 
 class CustomLanguage : public ScriptLanguage {
 	friend class Custom;
+	friend class ResourceFormatLoaderCustom;
+	friend class ResourceFormatSaverCustom;
+
 
 	static CustomLanguage *singleton;
 
 	static CustomLanguage *get_singleton();
+
+	static const char* extension;
 
 public:
 	CustomLanguage();
@@ -127,6 +137,25 @@ public:
 	virtual void frame();
 
 	virtual ~CustomLanguage();
+};
+
+class ResourceFormatLoaderCustom : public ResourceFormatLoader {
+public:
+
+	virtual RES load(const String &p_path,const String& p_original_path="",Error *r_error=NULL);
+	virtual void get_recognized_extensions(List<String> *p_extensions) const;
+	virtual bool handles_type(const String& p_type) const;
+	virtual String get_resource_type(const String &p_path) const;
+
+};
+
+class ResourceFormatSaverCustom : public ResourceFormatSaver {
+public:
+
+	virtual Error save(const String &p_path,const RES& p_resource,uint32_t p_flags=0);
+	virtual void get_recognized_extensions(const RES& p_resource,List<String> *p_extensions) const;
+	virtual bool recognize(const RES& p_resource) const;
+
 };
 
 #endif // GD_SCRIPT_H

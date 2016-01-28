@@ -141,7 +141,7 @@ void ScriptCreateDialog::ok_pressed() {
 		Error err = ResourceSaver::save(lpath,scr,ResourceSaver::FLAG_CHANGE_PATH);		
 		if (err!=OK) {
 
-			alert->set_text("Could not create script in filesystem: "+String(""));
+			alert->set_text("Could not create script in filesystem: "+String(lpath));
 			alert->popup_centered_minsize();
 			return;
 		}
