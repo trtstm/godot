@@ -52,9 +52,10 @@ bool Custom::can_instance() const
 	return true;
 }
 
+
 StringName Custom::get_instance_base_type() const
 {
-	//std::cout << "Custom::get_instance_base_type" << std::endl;
+	std::cout << "Custom::get_instance_base_type" << std::endl;
 	return StringName();
 }
 
